@@ -1,0 +1,55 @@
+server:
+  port: 8087  #端口
+  tomcat:
+    uri-encoding: UTF-8   #服务编码
+  error:
+    include-message: always #返回的响应体带上message
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  application:
+    name: pay-service
+  cloud:
+    nacos:
+      server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+      username: ${NACOS_USERNAME:}
+      password: ${NACOS_PASSWORD:}
+      discovery:
+        namespace: ${NACOS_NAMESPACE:}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+      config:
+        namespace: ${NACOS_NAMESPACE:}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        file-extension: yaml
+        shared-configs: # 共享配置
+          - dataId: shared-spring.yaml # 共享spring配置
+          - dataId: shared-redis.yaml # 共享redis配置
+          - dataId: shared-mybatis.yaml # 共享mybatis配置
+          - dataId: shared-logs.yaml # 共享日志配置
+          - dataId: shared-feign.yaml # 共享feign配置
+          - dataId: shared-mq.yaml # 共享mq配置
+          - dataId: shared-xxljob.yaml # 共享mq配置
+tj:
+  swagger:
+    enable: true
+    enableResponseWrap: true
+    package-path: com.tianji.pay.controller
+    title: 天机学堂 - 支付中心接口文档
+    description: 该服务提供微信、支付宝等各种平台的支付、退款等功能
+    contact-name: fzc70
+    contact-url: https://github.com/fzc70/tianji
+    version: v1.0
+  jdbc:
+    database: tj_pay
+  pay:
+    notifyHost: ${PAY_NOTIFY_HOST}
+    ali:
+      appId: ${ALIPAY_APP_ID}
+      merchantPrivateKey: ${ALIPAY_PRIVATE_KEY}
+      publicKey: ${ALIPAY_PUBLIC_KEY}
+    wx:
+      appId: ${WECHAT_APP_ID}
+      mchId: ${WECHAT_MCH_ID}
+      mchSerialNo: ${WECHAT_MCH_SERIAL_NO}
+      privateKey: ${WECHAT_PRIVATE_KEY_PATH}
+      apiV3Key: ${WECHAT_API_V3_KEY}

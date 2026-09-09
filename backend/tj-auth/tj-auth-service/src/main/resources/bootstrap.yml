@@ -1,0 +1,54 @@
+server:
+  port: 8081  #端口
+  tomcat:
+    uri-encoding: UTF-8   #服务编码
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  application:
+    name: auth-service
+  cloud:
+    nacos:
+      server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+      username: ${NACOS_USERNAME:}
+      password: ${NACOS_PASSWORD:}
+      discovery:
+        namespace: ${NACOS_NAMESPACE:}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+      config:
+        namespace: ${NACOS_NAMESPACE:}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        file-extension: yaml
+        shared-configs: # 共享配置
+          - data-id: shared-spring.yaml # 共享spring配置
+            refresh: false
+          - data-id: shared-redis.yaml # 共享redis配置
+            refresh: false
+          - data-id: shared-mybatis.yaml # 共享mybatis配置
+            refresh: false
+          - data-id: shared-logs.yaml # 共享日志配置
+            refresh: false
+encrypt:
+  key-store:
+    alias: ${JWT_KEY_ALIAS:tianji}
+    location: ${JWT_KEY_STORE}
+    password: ${JWT_KEY_STORE_PASSWORD}
+    secret: ${JWT_KEY_PASSWORD}
+tj:
+  swagger:
+    enable: true
+    enableResponseWrap: true
+    package-path: com.tianji.auth.controller
+    title: 天机学堂 - 权限微服务接口文档
+    description: 该服务用于管理权限相关信息
+    contact-name: fzc70
+    contact-url: https://github.com/fzc70/tianji
+    version: v1.0
+  auth:
+    resource:
+      enable: true
+      includeLoginPaths:
+        - /menus/me
+        - /accounts/logout
+  jdbc:
+    database: tj_auth
